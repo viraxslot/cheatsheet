@@ -9,3 +9,15 @@
 env:
   BRANCH: ${{ github.event.ref || github.head_ref }}
 ```
+
+```bash
+# reuse data between steps via environment variables
+- name: Previous step
+  run: |
+    # link.txt contains shared data
+    echo "LINK=$(cat link.txt)" >> $GITHUB_ENV
+
+- name: Current step
+  env:
+    REPORT_URL: ${{ env.LINK }}
+```
